@@ -1,0 +1,75 @@
+﻿@page "/"
+<MudTable Items="_source" Hover="true" Breakpoint="Breakpoint.None">
+    <HeaderContent>
+        <MudTh>查看房客</MudTh>
+        <MudTh>房号</MudTh>
+        <MudTh>单价</MudTh>
+        <MudTh>房间状态</MudTh>
+        <MudTh>房型</MudTh>
+        <MudTh>实际价格</MudTh>
+        <MudTh>押金</MudTh>
+        <MudTh>押金状态</MudTh>
+        <MudTh>记录状态</MudTh>
+        <MudTh>入住时间</MudTh>
+        <MudTh>离开时间</MudTh>
+        <MudTh>操作</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>
+            <MudButton Disabled="@(context.Occupants == null)" Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowOccupant(context))">
+                @(context.ShowOccupant ? "收起" : "查看")
+            </MudButton>
+        </MudTd>
+        <MudTd>@context.Name</MudTd>
+        <MudTd>@context.Price</MudTd>
+        <MudTd>@context.Status.ToDisplayName()</MudTd>
+        <MudTd>@context.RoomType</MudTd>
+        <MudTd>@context.ActualPrice</MudTd>
+        <MudTd>@context.Deposit</MudTd>
+        <MudTd>@context.DepositStatus?.ToDisplayName()</MudTd>
+        <MudTd>@context.RecordStatus?.ToDisplayName()</MudTd>
+        <MudTd>@context.CheckInTime</MudTd>
+        <MudTd>@context.DepartureTime</MudTd>
+        <MudTd>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary">开房</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <ChildRowContent>
+        @if (context.ShowOccupant)
+        {
+            <MudTr>
+                <td colspan="12">
+                    <MudCard Elevation="0">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1"><strong>@context.Name</strong>房客信息</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <MudTable Items="@context.Occupants" Context="Occupant" Hover="true" Breakpoint="Breakpoint.None" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh>姓名</MudTh>
+                                    <MudTh>性别</MudTh>
+                                    <MudTh>身份证号</MudTh>
+                                    <MudTh>地区</MudTh>
+                                    <MudTh>来自哪里</MudTh>
+                                    <MudTh>电话</MudTh>
+                                    <MudTh>备注</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd>@Occupant.Name</MudTd>
+                                    <MudTd>@Occupant.Sex</MudTd>
+                                    <MudTd>@Occupant.IdCard</MudTd>
+                                    <MudTd>@Occupant.Area</MudTd>
+                                    <MudTd>@Occupant.From</MudTd>
+                                    <MudTd>@Occupant.PhoneNumber</MudTd>
+                                    <MudTd>@Occupant.Remark</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudCardContent>
+                    </MudCard>
+                </td>
+            </MudTr>
+        }
+    </ChildRowContent>
+</MudTable>
