@@ -29,6 +29,11 @@ public class HistoryRecord:BaseEntity
     public List<int> OccupantId { get; set; }
     
     /// <summary>
+    /// 房客人数
+    /// </summary>
+    public int OccupantCount { get; set; }
+    
+    /// <summary>
     /// 实际单价/天
     /// </summary>
     public decimal Price { get; set; }

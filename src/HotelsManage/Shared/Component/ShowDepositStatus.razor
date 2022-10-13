@@ -1,0 +1,31 @@
+﻿@using HotelsManage.Enum
+
+@if (Status == null)
+{
+    <span></span>
+}
+else
+{
+    switch (Status.Value)
+    {
+        case DepositStatus.Pay:
+            <span class="room-empty">已支付</span>
+            break;
+        case DepositStatus.NotCharged:
+            <span class="room-check-in">未收取</span>
+            break;
+        case DepositStatus.Returned:
+            <span class="room-check-in">已退还</span>
+            break;
+        case DepositStatus.Unreturned:
+            <span class="room-check-in">未退还</span>
+            break;
+    }
+}
+
+@code {
+
+    [Parameter]
+    public DepositStatus? Status { get; set; }
+
+}

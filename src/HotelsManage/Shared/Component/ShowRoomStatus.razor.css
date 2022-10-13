@@ -1,0 +1,20 @@
+.room-empty {
+    background: green;
+    color: #fff;
+    padding: 1em;
+    border-radius: 3px;
+}
+
+.room-check-in {
+    background: red;
+    color: #fff;
+    padding: 1em;
+    border-radius: 3px;
+}
+
+.room-reservation{
+    background: green;
+    color: #fff;
+    padding: 1em;
+    border-radius: 3px;
+}

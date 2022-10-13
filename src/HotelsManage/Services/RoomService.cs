@@ -96,9 +96,10 @@ public class RoomService : BasicService<Room>
     /// <param name="roomId">房间ID</param>
     /// <param name="price">单价/天</param>
     /// <param name="deposit">押金</param>
+    /// <param name="occupantCount"></param>
     /// <param name="depositStatus">押金</param>
     /// <param name="occupants">房客</param>
-    public async Task OpenRoom(int roomId, decimal price, decimal deposit, DepositStatus depositStatus,
+    public async Task OpenRoom(int roomId, decimal price, decimal deposit, int occupantCount, DepositStatus depositStatus,
         List<Occupant> occupants)
     {
         var room = await Repository.FindAsync(roomId);
@@ -132,7 +133,8 @@ public class RoomService : BasicService<Room>
             OccupantId = occupants.Select(x => x.Id).ToList(),
             Price = price,
             RecordStatus = RecordStatus.CheckIn,
-            RoomType = room.RoomType
+            RoomType = room.RoomType,
+            OccupantCount = occupantCount
         };
         await historyRecordService.AddHistoryAsync(history);
 

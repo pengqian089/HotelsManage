@@ -1,0 +1,28 @@
+﻿@using HotelsManage.Enum
+
+@if (Status == null)
+{
+    <span></span>
+}
+else
+{
+    switch (Status.Value)
+    {
+        case RoomStatus.Empty:
+            <span class="room-empty">空房</span>
+            break;
+        case RoomStatus.CheckIn:
+            <span class="room-check-in">入住</span>
+            break;
+        case RoomStatus.Reservation:
+            <span class="room-check-in">预定</span>
+            break;
+    }
+}
+
+@code {
+
+    [Parameter]
+    public RoomStatus? Status { get; set; }
+
+}

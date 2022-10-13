@@ -4,7 +4,7 @@ using Model;
 
 namespace HotelsManage.Services;
 
-public class OccupantService:BasicService<Occupant>
+public class OccupantService : BasicService<Occupant>
 {
     /// <summary>
     /// 登记房客
@@ -22,7 +22,12 @@ public class OccupantService:BasicService<Occupant>
 
     public async Task<List<Occupant>> GetOccupantsAsync(string name)
     {
-        return await Repository.SearchFor(x => x.Name.Contains(name)).ToListAsync();
+        return await Repository.SearchFor(x => x.Name != null && x.Name.Contains(name)).ToListAsync();
+    }
+    
+    public async Task<Occupant?> GetOccupantAsync(string name)
+    {
+        return await Repository.SearchFor(x => x.Name != null && x.Name == name).FirstOrDefaultAsync();
     }
 
     public async Task<List<Occupant>> GetOccupantsAsync(int historyRecordId)

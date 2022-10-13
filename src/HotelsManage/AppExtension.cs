@@ -1,4 +1,5 @@
 ﻿using HotelsManage.Enum;
+using Microsoft.AspNetCore.Components;
 
 namespace HotelsManage;
 
@@ -6,14 +7,14 @@ public static class AppExtension
 {
     public const string AppName = "管理系统";
     
-    public static string ToDisplayName(this RoomStatus status)
+    public static MarkupString ToDisplayName(this RoomStatus status)
     {
         return status switch
         {
-            RoomStatus.Empty => "空房",
-            RoomStatus.CheckIn => "入住",
-            RoomStatus.Reservation => "预定",
-            _ => ""
+            RoomStatus.Empty => (MarkupString)"<span style='background:green;color:#fff;padding:1em'>空房</span>",
+            RoomStatus.CheckIn => (MarkupString)"<span style='background:red;color:#000;padding:1em'>入住</span>",
+            RoomStatus.Reservation => (MarkupString)"<span style='background:green;color:#fff;padding:1em'>预定</span>",
+            _ => (MarkupString)""
         };
     }
 

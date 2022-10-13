@@ -1,0 +1,199 @@
+﻿@using Microsoft.AspNetCore.Components
+@using HotelsManage.ViewModel
+@using FluentValidation
+@using HotelsManage.Enum
+@using HotelsManage.Services
+@using Severity = MudBlazor.Severity
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Preview" Class="mr-3 mb-n1"/>
+            入住登记
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm Model="_model" @ref="@_form" Validation="@(_validator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudAutocomplete T="string" @bind-Value="_model.Name"
+                                     Required="true"
+                                     CoerceText="false"
+                                     CoerceValue="true"
+                                     For="@(() => _model.Name)"
+                                     Immediate="true"
+                                     ShowProgressIndicator="true"
+                                     SearchFunc="@SearchOccupantAsync"
+                                     OnBlur="SetOccupantAsync"
+                                     Label="姓名"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudRadioGroup T="string" @bind-SelectedOption="_model.Sex">
+                        <MudRadio Option="@("男")">男</MudRadio>
+                        <MudRadio Option="@("女")">女</MudRadio>
+                    </MudRadioGroup>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.IdCard"
+                                  Required="true"
+                                  For="@(() => _model.IdCard)"
+                                  Immediate="true"
+                                  Label="身份证号"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.Area"
+                                  For="@(() => _model.Area)"
+                                  Immediate="true"
+                                  Label="地区"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.From"
+                                  For="@(() => _model.From)"
+                                  Immediate="true"
+                                  Label="来自"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="_model.PhoneNumber"
+                                  Required="true"
+                                  For="@(() => _model.PhoneNumber)"
+                                  Immediate="true"
+                                  Label="电话"/>
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="_model.Remark"
+                                  For="@(() => _model.Remark)"
+                                  Immediate="true"
+                                  Lines="3"
+                                  Label="备注"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudNumericField @bind-Value="_model.Price"
+                                     Required="true"
+                                     For="@(() => _model.Price)"
+                                     Immediate="true"
+                                     Min="0"
+                                     Max="9999999"
+                                     Label="实际价格"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudNumericField @bind-Value="_model.Deposit"
+                                     Required="true"
+                                     For="@(() => _model.Deposit)"
+                                     Immediate="true"
+                                     Min="0"
+                                     Max="9999999"
+                                     Label="押金"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudNumericField @bind-Value="_model.Count"
+                                     Required="true"
+                                     For="@(() => _model.Count)"
+                                     Immediate="true"
+                                     Min="0"
+                                     Max="9999999"
+                                     Label="入住人数"/>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">取消</MudButton>
+        <MudButton Color="Color.Primary" OnClick="CheckInAsync" Disabled="_isPost">
+            @if (_isPost)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+            }
+            else
+            {
+                <MudText>登记入住</MudText>
+            }
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public int RoomId { get; set; }
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; }
+
+    private bool _isPost = false;
+
+    private MudForm _form;
+
+    private CheckInRegister _model = new();
+
+    private CheckInRegisterFluentValidator _validator = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var service = new RoomService();
+        var room = await service.GetAsync(RoomId);
+        if (room == null)
+        {
+            Snackbar.Add("房间不存在", Severity.Error);
+            return;
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task CheckInAsync()
+    {
+        await _form.Validate();
+        if (_form.IsValid)
+        {
+            _isPost = true;
+            var roomService = new RoomService();
+
+            var depositStatus = _model.Deposit == 0m ? DepositStatus.NotCharged : DepositStatus.Pay;
+
+            await roomService.OpenRoom(RoomId, _model.Price, _model.Deposit, _model.Count, depositStatus, _model.ToOccupantList());
+            _isPost = false;
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+
+    private async Task<IEnumerable<string?>> SearchOccupantAsync(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return Array.Empty<string>();
+        }
+        var service = new OccupantService();
+        var list = await service.GetOccupantsAsync(value);
+        return list.Select(x => x.Name).ToList();
+    }
+
+    private async Task SetOccupantAsync(FocusEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_model.Name))
+        {
+            var service = new OccupantService();
+            var occupant = await service.GetOccupantAsync(_model.Name);
+            if (occupant != null)
+            {
+                if (string.IsNullOrEmpty(_model.Sex))
+                    _model.Sex = occupant.Sex;
+                if (string.IsNullOrEmpty(_model.IdCard))
+                    _model.IdCard = occupant.IdCard;
+                if (string.IsNullOrEmpty(_model.Area))
+                    _model.Area = occupant.Area;
+                if (string.IsNullOrEmpty(_model.From))
+                    _model.From = occupant.From;
+                if (string.IsNullOrEmpty(_model.PhoneNumber))
+                    _model.PhoneNumber = occupant.PhoneNumber;
+            }
+        }
+    }
+
+}

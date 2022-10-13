@@ -1,5 +1,7 @@
 ﻿@page "/"
-<MudTable Items="_source" Hover="true" Breakpoint="Breakpoint.None">
+@using HotelsManage.Enum
+
+<MudTable Items="_source" Hover="true" Breakpoint="Breakpoint.None" Loading="_isLoading">
     <HeaderContent>
         <MudTh>查看房客</MudTh>
         <MudTh>房号</MudTh>
@@ -22,16 +24,28 @@
         </MudTd>
         <MudTd>@context.Name</MudTd>
         <MudTd>@context.Price</MudTd>
-        <MudTd>@context.Status.ToDisplayName()</MudTd>
+        <MudTd>
+            <ShowRoomStatus Status="@context.Status"></ShowRoomStatus>
+        </MudTd>
         <MudTd>@context.RoomType</MudTd>
         <MudTd>@context.ActualPrice</MudTd>
         <MudTd>@context.Deposit</MudTd>
-        <MudTd>@context.DepositStatus?.ToDisplayName()</MudTd>
+        <MudTd>
+            <ShowDepositStatus Status="@context.DepositStatus"></ShowDepositStatus>
+        </MudTd>
         <MudTd>@context.RecordStatus?.ToDisplayName()</MudTd>
         <MudTd>@context.CheckInTime</MudTd>
         <MudTd>@context.DepartureTime</MudTd>
         <MudTd>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary">开房</MudButton>
+            @if (context.Status == RoomStatus.Empty)
+            {
+                <MudButton Variant="Variant.Filled" OnClick="() => OpenRoomAsync(context)" Color="Color.Primary">开房</MudButton>
+            }
+            else if (context.Status == RoomStatus.CheckIn)
+            {
+                <MudButton OnClick="() => CheckOutRoomAsync(context)" Variant="Variant.Filled" Color="Color.Secondary">退房</MudButton>
+                <MudButton OnClick="() => LeaseAsync(context)" Variant="Variant.Filled" Color="Color.Warning">续房</MudButton>
+            }
         </MudTd>
     </RowTemplate>
     <ChildRowContent>

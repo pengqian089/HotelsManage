@@ -1,0 +1,75 @@
+﻿@using HotelsManage.Services
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Preview" Class="mr-3 mb-n1"/>
+            续房
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" md="12">
+                <MudNumericField @bind-Value="Amount" Label="续房价" Variant="Variant.Text" Min="0" Max="9999999" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">取消</MudButton>
+        <MudButton Color="Color.Primary" OnClick="LeasePostAsync" Disabled="_isPost">
+            @if (_isPost)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+            }
+            else
+            {
+                <MudText>续房</MudText>
+            }
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code{
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+    
+    [Inject] private IDialogService DialogService { get; set; }
+    
+    [Inject] private ISnackbar Snackbar { get; set; }
+    
+    [Parameter]
+    public int RoomId { get; set; }
+
+    private decimal Amount { get; set; }
+
+    private bool _isPost = false;
+    
+    
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task LeasePostAsync()
+    {
+        _isPost = true;
+        var result = await DialogService.ShowMessageBox("提示", $"确定以[{Amount}]元价格续房吗？","确定","取消");
+        if (result != true)
+        {
+            _isPost = false;
+            return;
+        }
+
+        var service = new HistoryRecordService();
+        var record = await service.FindCheckInAsync(RoomId);
+        if (record == null)
+        {
+            Snackbar.Add("没有查找到开房记录，请检查", Severity.Warning);
+            return;
+        }
+        
+        await service.LeaseRoom(RoomId, Amount);
+        MudDialog.Close(DialogResult.Ok(true));
+        _isPost = false;
+    }
+}
