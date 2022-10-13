@@ -136,9 +136,10 @@
         if (room == null)
         {
             Snackbar.Add("房间不存在", Severity.Error);
+            MudDialog.Cancel();
             return;
         }
-
+        _model.Price = room.Price;
         await base.OnParametersSetAsync();
     }
 

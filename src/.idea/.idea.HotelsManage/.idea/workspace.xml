@@ -4,30 +4,7 @@
     <projectFile>HotelsManage/HotelsManage.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/Dialog.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/LeaseForm.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowDepositStatus.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowRoomStatus.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowRoomStatus.razor.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/ViewModel/CheckInRegister.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage.sln" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/AppExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/AppExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Form1.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/HotelsManage.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/HotelsManage.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Model/HistoryRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Model/HistoryRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/OccupantService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/OccupantService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/RoomService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/RoomService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/MainLayout.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/_Imports.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/wwwroot/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/wwwroot/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="open room,check in,check out ,lease room" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,6 +19,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6b71871a51e8449db4cc5eeafda69537819000/91/abf064dc/EnumExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/project/HotelsManage/src/HotelsManage/_Imports.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -93,8 +71,16 @@
       <updated>1665556184522</updated>
       <workItem from="1665556193857" duration="10144000" />
       <workItem from="1665624062778" duration="2903000" />
-      <workItem from="1665629868820" duration="16896000" />
+      <workItem from="1665629868820" duration="17194000" />
     </task>
+    <task id="LOCAL-00001" summary="open room,check in,check out ,lease room">
+      <created>1665656006419</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665656006419</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +101,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="open room,check in,check out ,lease room" />
+    <option name="LAST_COMMIT_MESSAGE" value="open room,check in,check out ,lease room" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
