@@ -4,19 +4,15 @@
     <projectFile>HotelsManage/HotelsManage.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="room action">
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor.cs" afterDir="false" />
+    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="update check-in register information">
+      <change afterPath="$PROJECT_DIR$/HotelsManage/Pages/HistoryRecord.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HotelsManage/Pages/HistoryRecord.razor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HotelsManage/ViewModel/Summary.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Database/DbAccess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Database/DbAccess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Model/HistoryRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Model/HistoryRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Counter.razor" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/FetchData.razor" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/OccupantService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/OccupantService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/RoomService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/RoomService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/NavMenu.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +82,7 @@
       <updated>1665556184522</updated>
       <workItem from="1665556193857" duration="10144000" />
       <workItem from="1665624062778" duration="2903000" />
-      <workItem from="1665629868820" duration="29354000" />
+      <workItem from="1665629868820" duration="35515000" />
     </task>
     <task id="LOCAL-00001" summary="open room,check in,check out ,lease room">
       <created>1665656006419</created>
@@ -109,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665718715696</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update check-in register information">
+      <created>1665728314728</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1665728314728</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,7 +136,8 @@
     <MESSAGE value="open room,check in,check out ,lease room" />
     <MESSAGE value="fill default price" />
     <MESSAGE value="room action" />
-    <option name="LAST_COMMIT_MESSAGE" value="room action" />
+    <MESSAGE value="update check-in register information" />
+    <option name="LAST_COMMIT_MESSAGE" value="update check-in register information" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -153,13 +157,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs</url>
-          <line>131</line>
+          <line>156</line>
           <properties documentPath="D:\project\HotelsManage\src\HotelsManage\Services\HistoryRecordService.cs" initialLine="131" containingFunctionPresentation="method 'GetRegisterInformationAsync'">
             <startOffsets>
-              <option value="4028" />
+              <option value="4996" />
             </startOffsets>
             <endOffsets>
-              <option value="4051" />
+              <option value="5019" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="10" />

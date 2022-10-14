@@ -1,0 +1,110 @@
+﻿@page "/history"
+<MudStack Row="true" Style="margin-bottom: 1em">
+    <MudDateRangePicker Label="起止时间" Editable="true" @bind-DateRange="_dateRange"/>
+    <MudButton Variant="Variant.Filled" OnClick="async () => await QueryDataAsync()" Color="Color.Primary">查询</MudButton>
+</MudStack>
+@if (_isLoading.HasValue)
+{
+    if (_isLoading == true)
+    {
+        <MudCard>
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px"/>
+            <MudCardContent>
+                <MudSkeleton Width="30%" Height="42px;"/>
+                <MudSkeleton Width="80%"/>
+                <MudSkeleton Width="100%"/>
+            </MudCardContent>
+            <MudCardActions>
+                <MudSkeleton Width="64px" Height="40px" Class="ml-2"/>
+                <MudSkeleton Width="105px" Height="40px" Class="ml-3"/>
+            </MudCardActions>
+        </MudCard>
+    }
+    else if (_isLoading == false)
+    {
+        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true">
+            <MudTabPanel Text="图">
+                <MudChart ChartType="ChartType.Line" ChartSeries="@_series" @bind-SelectedIndex="_index" XAxisLabels="@_axisLabels" Width="100%" Height="500px"></MudChart>
+            </MudTabPanel>
+            <MudTabPanel Text="表">
+                <MudStack Row="true" Style="margin: 1em">
+                    <MudPaper Class="pa-3">区间入住人数：@_count</MudPaper>
+                    <MudPaper Class="pa-3">区间入住次数：@_length</MudPaper>
+                    <MudPaper Class="pa-3">区间总收入：@_total</MudPaper>
+                </MudStack>
+                <MudTable Items="_source" Hover="true" Breakpoint="Breakpoint.None">
+                    <HeaderContent>
+                        <MudTh>查看房客</MudTh>
+                        <MudTh>房号</MudTh>
+                        <MudTh>实际价格</MudTh>
+                        <MudTh>房型</MudTh>
+                        <MudTh>房客人数</MudTh>
+                        <MudTh>押金</MudTh>
+                        <MudTh>押金状态</MudTh>
+                        <MudTh>记录状态</MudTh>
+                        <MudTh>入住时间</MudTh>
+                        <MudTh>离开时间</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>
+                            <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowOccupant(context))">
+                                @(context.ShowOccupant ? "收起" : "查看")
+                            </MudButton>
+                        </MudTd>
+                        <MudTd>@context.Name</MudTd>
+                        <MudTd>@context.Price</MudTd>
+                        <MudTd>@context.RoomType</MudTd>
+                        <MudTd>@context.OccupantCount</MudTd>
+                        <MudTd>@context.Deposit</MudTd>
+                        <MudTd>
+                            <ShowDepositStatus Status="@context.DepositStatus"></ShowDepositStatus>
+                        </MudTd>
+                        <MudTd>
+                            <ShowRecordStatus Status="@context.RecordStatus"></ShowRecordStatus>
+                        </MudTd>
+                        <MudTd>@context.CheckInTime</MudTd>
+                        <MudTd>@context.DepartureTime</MudTd>
+                    </RowTemplate>
+                    <ChildRowContent>
+                        @if (context.ShowOccupant)
+                        {
+                            <MudTr>
+                                <td colspan="10">
+                                    <MudCard Elevation="0">
+                                        <MudCardHeader>
+                                            <CardHeaderContent>
+                                                <MudText Typo="Typo.body1"><strong>@context.Name</strong>房客信息</MudText>
+                                            </CardHeaderContent>
+                                        </MudCardHeader>
+                                        <MudCardContent Class="pa-0">
+                                            <MudTable Items="@context.Occupants" Context="Occupant" Hover="true" Breakpoint="Breakpoint.None" Elevation="0">
+                                                <HeaderContent>
+                                                    <MudTh>姓名</MudTh>
+                                                    <MudTh>性别</MudTh>
+                                                    <MudTh>身份证号</MudTh>
+                                                    <MudTh>地区</MudTh>
+                                                    <MudTh>来自哪里</MudTh>
+                                                    <MudTh>电话</MudTh>
+                                                    <MudTh>备注</MudTh>
+                                                </HeaderContent>
+                                                <RowTemplate>
+                                                    <MudTd>@Occupant.Name</MudTd>
+                                                    <MudTd>@Occupant.Sex</MudTd>
+                                                    <MudTd>@Occupant.IdCard</MudTd>
+                                                    <MudTd>@Occupant.Area</MudTd>
+                                                    <MudTd>@Occupant.From</MudTd>
+                                                    <MudTd>@Occupant.PhoneNumber</MudTd>
+                                                    <MudTd>@Occupant.Remark</MudTd>
+                                                </RowTemplate>
+                                            </MudTable>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </td>
+                            </MudTr>
+                        }
+                    </ChildRowContent>
+                </MudTable>
+            </MudTabPanel>
+        </MudTabs>
+    }
+}

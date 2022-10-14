@@ -127,7 +127,7 @@ public partial class Index
                 return;
             }
 
-            var depositStatus = DepositStatus.Pay;
+            var depositStatus = record.Deposit == 0m ? DepositStatus.NotCharged : DepositStatus.Pay;
             if (record.DepositStatus == DepositStatus.Pay)
             {
                 var result = await DialogService.ShowMessageBox("提示", $"是否退还押金[{record.Deposit}]？", "退还", "不退还");

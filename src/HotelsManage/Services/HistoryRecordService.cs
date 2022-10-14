@@ -63,10 +63,35 @@ public class HistoryRecordService : BasicService<HistoryRecord>
         await UpdateAsync(record);
     }
 
-    public async Task<List<HistoryRecord>> GetHistoryRecordsAsync(DateTime start, DateTime end)
+    public async IAsyncEnumerable<Summary> GetHistoryRecordsAsync(DateTime start, DateTime end)
     {
-        return await Repository.SearchFor(x =>
+        var list = await Repository.SearchFor(x =>
             x.RecordStatus == RecordStatus.Complete && x.CheckInTime >= start && x.CheckInTime <= end).ToListAsync();
+
+        var occupantIds = list.Select(x => x.OccupantId).SelectMany(x => x).ToList();
+
+        var occupantService = new OccupantService();
+        var occupants = await occupantService.GetOccupantsAsync(occupantIds);
+        
+        foreach (var item in list)
+        {
+            var filterOccupants = occupants.Where(x => item.OccupantId.Contains(x.Id)).ToList();
+            yield return new Summary
+            {
+                Id = item.Id,
+                RoomId = item.RoomId,
+                CheckInTime = item.CheckInTime,
+                DepartureTime = item.DepartureTime,
+                Deposit = item.Deposit,
+                DepositStatus = item.DepositStatus,
+                Name = item.Name,
+                OccupantCount = item.OccupantCount,
+                Occupants = filterOccupants,
+                Price = item.Price,
+                RoomType = item.RoomType,
+                RecordStatus = item.RecordStatus
+            };
+        }
     }
 
     public async Task UpdateDepositAsync(int roomId, decimal deposit)

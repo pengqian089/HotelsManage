@@ -2,6 +2,7 @@
 @using HotelsManage.Enum
 <MudStack Row="true" Style="margin-bottom: 1em">
     <MudButton Variant="Variant.Filled" OnClick="() => SaveRoomAsync()" Color="Color.Primary">添加房间</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="async () => await LoadRoomDataAsync()" Color="Color.Primary">刷新</MudButton>
 </MudStack>
 <MudTable Items="_source" Hover="true" Breakpoint="Breakpoint.None" Loading="_isLoading">
     <HeaderContent>
