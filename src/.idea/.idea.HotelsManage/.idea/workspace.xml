@@ -4,11 +4,9 @@
     <projectFile>HotelsManage/HotelsManage.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="start up animation">
-      <change afterPath="$PROJECT_DIR$/HotelsManage/aw57d-sstep-001.ico" afterDir="false" />
+    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="set icon">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Form1.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Form1.resx" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Form1.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/HotelsManage.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/HotelsManage.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +76,7 @@
       <updated>1665556184522</updated>
       <workItem from="1665556193857" duration="10144000" />
       <workItem from="1665624062778" duration="2903000" />
-      <workItem from="1665629868820" duration="36271000" />
+      <workItem from="1665629868820" duration="38972000" />
     </task>
     <task id="LOCAL-00001" summary="open room,check in,check out ,lease room">
       <created>1665656006419</created>
@@ -122,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665735337252</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="set icon">
+      <created>1665735850629</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665735850629</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,7 +154,8 @@
     <MESSAGE value="update check-in register information" />
     <MESSAGE value="summary" />
     <MESSAGE value="start up animation" />
-    <option name="LAST_COMMIT_MESSAGE" value="start up animation" />
+    <MESSAGE value="set icon" />
+    <option name="LAST_COMMIT_MESSAGE" value="set icon" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
