@@ -4,15 +4,9 @@
     <projectFile>HotelsManage/HotelsManage.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="update check-in register information">
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Pages/HistoryRecord.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Pages/HistoryRecord.razor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/ViewModel/Summary.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/NavMenu.razor" afterDir="false" />
+    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="summary">
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Form1.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/wwwroot/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/wwwroot/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +76,7 @@
       <updated>1665556184522</updated>
       <workItem from="1665556193857" duration="10144000" />
       <workItem from="1665624062778" duration="2903000" />
-      <workItem from="1665629868820" duration="35515000" />
+      <workItem from="1665629868820" duration="35867000" />
     </task>
     <task id="LOCAL-00001" summary="open room,check in,check out ,lease room">
       <created>1665656006419</created>
@@ -112,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665728314728</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="summary">
+      <created>1665735002330</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1665735002330</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,7 +138,8 @@
     <MESSAGE value="fill default price" />
     <MESSAGE value="room action" />
     <MESSAGE value="update check-in register information" />
-    <option name="LAST_COMMIT_MESSAGE" value="update check-in register information" />
+    <MESSAGE value="summary" />
+    <option name="LAST_COMMIT_MESSAGE" value="summary" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
