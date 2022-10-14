@@ -6,7 +6,12 @@
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationIcon>aw57d-sstep-001.ico</ApplicationIcon>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="aw57d-sstep-001.ico" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="11.2.2" />
