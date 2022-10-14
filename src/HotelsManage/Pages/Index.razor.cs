@@ -3,6 +3,7 @@ using HotelsManage.Services;
 using HotelsManage.Shared.Component;
 using HotelsManage.ViewModel;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using MudBlazor;
 
 namespace HotelsManage.Pages;
@@ -18,6 +19,8 @@ public partial class Index
     [Inject] private IDialogService DialogService { get; set; }
 
     [Inject] private ISnackbar Snackbar { get; set; }
+
+    [Inject] private ILogger<Index> Logger { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,6 +40,21 @@ public partial class Index
         roomDetail.ShowOccupant = !roomDetail.ShowOccupant;
     }
 
+    private async Task SaveRoomAsync(int? roomId = null)
+    {
+        var parameters = new DialogParameters
+        {
+            ["RoomId"] = roomId,
+        };
+        var dialog = DialogService.Show<RoomForm>("", parameters);
+        var result = await dialog.Result;
+        if (!result.Cancelled && result.Data is true)
+        {
+            Snackbar.Add($"成功{(roomId.HasValue ? "修改" : "添加")}房间", Severity.Success);
+            await LoadRoomDataAsync();
+        }
+    }
+
     private async Task OpenRoomAsync(RoomDetail context)
     {
         var parameters = new DialogParameters
@@ -52,6 +70,30 @@ public partial class Index
         }
     }
 
+    private async Task DeleteRoomAsync(RoomDetail context)
+    {
+        if (context.Status != RoomStatus.Empty)
+        {
+            Snackbar.Add("不是空房状态下，无法删除", Severity.Warning);
+            return;
+        }
+        var checkResult = await DialogService.ShowMessageBox("提示", "删除房间操作不可撤销，确定要删除吗？", "删除", "取消");
+        if (checkResult == true)
+        {
+            try
+            {
+                await _roomService.DeleteRoomAsync(context.Id);
+                Snackbar.Add($"删除[{context.Name}]成功", Severity.Success);
+                await LoadRoomDataAsync();
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e,"delete room fail");
+                Snackbar.Add(e.Message, Severity.Error);
+            }
+        }
+    }
+
     private async Task CheckOutRoomAsync(RoomDetail context)
     {
         var checkResult = await DialogService.ShowMessageBox("提示", "退房操作不可撤销确定要退房吗？", "退房", "取消");
@@ -63,12 +105,13 @@ public partial class Index
                 Snackbar.Add("没有查询到该房间", Severity.Error);
                 return;
             }
+
             if (room.Status == RoomStatus.Empty)
             {
                 Snackbar.Add("此房间为空房，不能进行退房操作", Severity.Warning);
                 return;
             }
-            
+
             var service = new HistoryRecordService();
             var record = await service.FindCheckInAsync(room.Id);
             if (record == null)
@@ -76,7 +119,7 @@ public partial class Index
                 Snackbar.Add("没有查找到开房记录，请检查", Severity.Warning);
                 return;
             }
-            
+
             var depositStatus = DepositStatus.Pay;
             if (record.DepositStatus == DepositStatus.Pay)
             {
@@ -88,12 +131,12 @@ public partial class Index
                     _ => depositStatus
                 };
             }
-            
+
             await _roomService.RoomCheckOut(room.Id, depositStatus);
             await LoadRoomDataAsync();
         }
     }
-    
+
     private async Task LeaseAsync(RoomDetail context)
     {
         if (context.Status == RoomStatus.CheckIn)

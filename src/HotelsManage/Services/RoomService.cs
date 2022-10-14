@@ -55,6 +55,9 @@ public class RoomService : BasicService<Room>
     /// <param name="room"></param>
     public async Task AddRoomAsync(Room room)
     {
+        var checkRoom = await Repository.SearchFor(x => x.Name == room.Name).FirstOrDefaultAsync();
+        if (checkRoom != null)
+            throw new BusinessException($"房号{room.Name}已存在");
         await Repository.InsertAsync(room);
     }
 
@@ -64,21 +67,24 @@ public class RoomService : BasicService<Room>
     /// <param name="room"></param>
     public async Task EditRoomAsync(Room room)
     {
+        var checkRoom = await Repository.SearchFor(x => x.Name == room.Name && x.Id != room.Id).FirstOrDefaultAsync();
+        if (checkRoom != null)
+            throw new BusinessException($"房号{room.Name}已存在");
         await Repository.UpdateAsync(room);
     }
 
     /// <summary>
     /// 删除房间
     /// </summary>
-    /// <param name="room"></param>
+    /// <param name="roomId"></param>
     /// <exception cref="BusinessException"></exception>
-    public async Task DeleteRoomAsync(Room room)
+    public async Task DeleteRoomAsync(int roomId)
     {
-        var result = await new HistoryRecordService().CheckRoomIdAsync(room.Id);
+        var result = await new HistoryRecordService().CheckRoomIdAsync(roomId);
         if (result)
             throw new BusinessException("房间与历史记录还有关联，不能删除");
 
-        await Repository.DeleteAsync(room.Id);
+        await Repository.DeleteAsync(roomId);
     }
 
     /// <summary>
@@ -99,7 +105,8 @@ public class RoomService : BasicService<Room>
     /// <param name="occupantCount"></param>
     /// <param name="depositStatus">押金</param>
     /// <param name="occupants">房客</param>
-    public async Task OpenRoom(int roomId, decimal price, decimal deposit, int occupantCount, DepositStatus depositStatus,
+    public async Task OpenRoom(int roomId, decimal price, decimal deposit, int occupantCount,
+        DepositStatus depositStatus,
         List<Occupant> occupants)
     {
         var room = await Repository.FindAsync(roomId);
@@ -173,7 +180,7 @@ public class RoomService : BasicService<Room>
     /// <param name="roomId"></param>
     /// <param name="price"></param>
     /// <exception cref="BusinessException"></exception>
-    public async Task LeaseRoom(int roomId,decimal price)
+    public async Task LeaseRoom(int roomId, decimal price)
     {
         var room = await Repository.FindAsync(roomId);
 
@@ -186,7 +193,7 @@ public class RoomService : BasicService<Room>
             throw new BusinessException("没有查找到开房记录，请检查");
 
         record.Price += price;
-        
+
         await historyRecordService.UpdateAsync(record);
     }
 }

@@ -1,4 +1,6 @@
-﻿using HotelsManage.Enum;
+﻿using FluentValidation;
+using HotelsManage.Enum;
+using HotelsManage.Model;
 using Microsoft.AspNetCore.Components;
 
 namespace HotelsManage;
@@ -7,36 +9,19 @@ public static class AppExtension
 {
     public const string AppName = "管理系统";
     
-    public static MarkupString ToDisplayName(this RoomStatus status)
-    {
-        return status switch
-        {
-            RoomStatus.Empty => (MarkupString)"<span style='background:green;color:#fff;padding:1em'>空房</span>",
-            RoomStatus.CheckIn => (MarkupString)"<span style='background:red;color:#000;padding:1em'>入住</span>",
-            RoomStatus.Reservation => (MarkupString)"<span style='background:green;color:#fff;padding:1em'>预定</span>",
-            _ => (MarkupString)""
-        };
-    }
-
-    public static string ToDisplayName(this DepositStatus depositStatus)
-    {
-        return depositStatus switch
-        {
-            DepositStatus.Pay => "已支付",
-            DepositStatus.Returned => "已退还",
-            DepositStatus.Unreturned => "未退还",
-            DepositStatus.NotCharged => "未收取",
-            _ => ""
-        };
-    }
     
-    public static string ToDisplayName(this RecordStatus recordStatus)
+    
+    public static Func<object, string, Task<IEnumerable<string>>> ValidateValue<T>(this T t)
+        where T:AbstractValidator<T>
     {
-        return recordStatus switch
+        return async (model, propertyName) =>
         {
-            RecordStatus.Complete => "已完成",
-            RecordStatus.CheckIn => "已入住",
-            _ => ""
+            var result =
+                await t.ValidateAsync(ValidationContext<T>.CreateWithOptions((T)model,
+                    x => x.IncludeProperties(propertyName)));
+            if (result.IsValid)
+                return Array.Empty<string>();
+            return result.Errors.Select(e => e.ErrorMessage);
         };
     }
 }

@@ -9,13 +9,13 @@ else
     switch (Status.Value)
     {
         case RoomStatus.Empty:
-            <span class="room-empty">空房</span>
+            <MudChip Label="true" Color="Color.Success">空房</MudChip>
             break;
         case RoomStatus.CheckIn:
-            <span class="room-check-in">入住</span>
+            <MudChip Label="true" Color="Color.Info">入住</MudChip>
             break;
         case RoomStatus.Reservation:
-            <span class="room-check-in">预定</span>
+            <MudChip Label="true" Color="Color.Warning">预定</MudChip>
             break;
     }
 }

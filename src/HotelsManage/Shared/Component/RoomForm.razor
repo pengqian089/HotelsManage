@@ -1,0 +1,146 @@
+﻿@using Microsoft.AspNetCore.Components
+@using HotelsManage.Enum
+@using HotelsManage.Model
+@using HotelsManage.Services
+@using Microsoft.Extensions.Logging
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Preview" Class="mr-3 mb-n1"/>
+            @_title
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm Model="_model" @ref="@_form" Validation="@(_validator.ValidateValue)">
+            <MudGrid>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="_model.Name"
+                                  Required="true"
+                                  For="@(() => _model.Name)"
+                                  Immediate="true"
+                                  Label="房号"/>
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudTextField @bind-Value="_model.RoomType"
+                                  Required="true"
+                                  For="@(() => _model.RoomType)"
+                                  Immediate="true"
+                                  Label="房型"/>
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudNumericField @bind-Value="_model.Price"
+                                     Required="true"
+                                     For="@(() => _model.Price)"
+                                     Immediate="true"
+                                     Min="0"
+                                     Max="9999999"
+                                     Label="价格"/>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">取消</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SaveRoomAsync" Disabled="_isPost">
+            @if (_isPost)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+            }
+            else
+            {
+                <MudText>@_title</MudText>
+            }
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+    
+    [Parameter]
+    public int? RoomId { get; set; }
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; }
+    
+    [Inject]
+    private ILogger<RoomForm> Logger { get; set; }
+
+    private bool _isPost = false;
+
+    private MudForm _form;
+
+    private string _title = "添加房间";
+
+    private Room _model = new()
+    {
+        Status = RoomStatus.Empty
+    };
+
+    private readonly RoomFluentValidator _validator = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (RoomId.HasValue)
+        {
+            var service = new RoomService();
+            var room = await service.GetAsync(RoomId.Value);
+            if (room == null)
+            {
+                Snackbar.Add("房间不存在", Severity.Error);
+                MudDialog.Cancel();
+                return;
+            }
+            if (room.Status != RoomStatus.Empty)
+            {
+                Snackbar.Add("不是空房状态下，无法修改房间信息", Severity.Warning);
+                MudDialog.Cancel();
+                return;
+            }
+            _title = "修改房间";
+            _model = room;
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task SaveRoomAsync()
+    {
+        await _form.Validate();
+        if (_form.IsValid)
+        {
+            _isPost = true;
+
+            try
+            {
+                var service = new RoomService();
+                if (_model.Id == 0)
+                {
+                    await service.AddRoomAsync(_model);
+                }
+                else
+                {
+                    await service.EditRoomAsync(_model);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e,"add room fail");
+                Snackbar.Add(e.Message, Severity.Error);
+                _isPost = false;
+                return;
+            }
+            
+            _isPost = false;
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+
+}

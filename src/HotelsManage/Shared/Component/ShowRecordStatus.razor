@@ -1,0 +1,25 @@
+﻿@using HotelsManage.Enum
+
+@if (Status == null)
+{
+    <span></span>
+}
+else
+{
+    switch (Status.Value)
+    {
+        case RecordStatus.Complete:
+            <MudChip Label="true" Color="Color.Success">已完成</MudChip>
+            break;
+        case RecordStatus.CheckIn:
+            <MudChip Label="true" Color="Color.Warning">已入住</MudChip>
+            break;
+    }
+}
+
+@code {
+
+    [Parameter]
+    public RecordStatus? Status { get; set; }
+
+}

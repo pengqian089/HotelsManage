@@ -9,16 +9,16 @@ else
     switch (Status.Value)
     {
         case DepositStatus.Pay:
-            <span class="room-empty">已支付</span>
+            <MudChip Label="true" Color="Color.Success">已支付</MudChip>
             break;
         case DepositStatus.NotCharged:
-            <span class="room-check-in">未收取</span>
+            <MudChip Label="true" Color="Color.Info">未收取</MudChip>
             break;
         case DepositStatus.Returned:
-            <span class="room-check-in">已退还</span>
+            <MudChip Label="true" Color="Color.Warning">已退还</MudChip>
             break;
         case DepositStatus.Unreturned:
-            <span class="room-check-in">未退还</span>
+            <MudChip Label="true" Color="Color.Error">未退还</MudChip>
             break;
     }
 }

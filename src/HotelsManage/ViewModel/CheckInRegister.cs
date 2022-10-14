@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HotelsManage.Model;
 using Model;
 
 namespace HotelsManage.ViewModel;
@@ -75,7 +76,7 @@ public class CheckInRegister
     }
 }
 
-public class CheckInRegisterFluentValidator : AbstractValidator<CheckInRegister>
+public class CheckInRegisterFluentValidator : Validator<CheckInRegister>
 {
     public CheckInRegisterFluentValidator()
     {
@@ -91,14 +92,4 @@ public class CheckInRegisterFluentValidator : AbstractValidator<CheckInRegister>
 
         RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("请输入电话号码");
     }
-
-    public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
-    {
-        var result =
-            await ValidateAsync(ValidationContext<CheckInRegister>.CreateWithOptions((CheckInRegister)model,
-                x => x.IncludeProperties(propertyName)));
-        if (result.IsValid)
-            return Array.Empty<string>();
-        return result.Errors.Select(e => e.ErrorMessage);
-    };
 }

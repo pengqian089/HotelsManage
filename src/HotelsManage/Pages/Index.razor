@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using HotelsManage.Enum
-
+<MudStack Row="true" Style="margin-bottom: 1em">
+    <MudButton Variant="Variant.Filled" OnClick="() => SaveRoomAsync()" Color="Color.Primary">添加房间</MudButton>
+</MudStack>
 <MudTable Items="_source" Hover="true" Breakpoint="Breakpoint.None" Loading="_isLoading">
     <HeaderContent>
         <MudTh>查看房客</MudTh>
@@ -33,13 +35,17 @@
         <MudTd>
             <ShowDepositStatus Status="@context.DepositStatus"></ShowDepositStatus>
         </MudTd>
-        <MudTd>@context.RecordStatus?.ToDisplayName()</MudTd>
+        <MudTd>
+            <ShowRecordStatus Status="@context.RecordStatus"></ShowRecordStatus>
+        </MudTd>
         <MudTd>@context.CheckInTime</MudTd>
         <MudTd>@context.DepartureTime</MudTd>
         <MudTd>
             @if (context.Status == RoomStatus.Empty)
             {
                 <MudButton Variant="Variant.Filled" OnClick="() => OpenRoomAsync(context)" Color="Color.Primary">开房</MudButton>
+                <MudButton Variant="Variant.Filled" OnClick="() => SaveRoomAsync(context.Id)" Color="Color.Tertiary">修改</MudButton>
+                <MudButton Variant="Variant.Filled" OnClick="() => DeleteRoomAsync(context)" Color="Color.Error">删除</MudButton>
             }
             else if (context.Status == RoomStatus.CheckIn)
             {
