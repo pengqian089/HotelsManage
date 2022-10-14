@@ -1,6 +1,8 @@
 ﻿using HotelsManage.Database;
 using HotelsManage.Enum;
 using HotelsManage.Model;
+using HotelsManage.Shared.Component;
+using HotelsManage.ViewModel;
 
 namespace HotelsManage.Services;
 
@@ -37,7 +39,7 @@ public class HistoryRecordService : BasicService<HistoryRecord>
     {
         await Repository.UpdateAsync(historyRecord);
     }
-    
+
     /// <summary>
     /// 续费
     /// </summary>
@@ -60,14 +62,14 @@ public class HistoryRecordService : BasicService<HistoryRecord>
 
         await UpdateAsync(record);
     }
-    
+
     public async Task<List<HistoryRecord>> GetHistoryRecordsAsync(DateTime start, DateTime end)
     {
         return await Repository.SearchFor(x =>
             x.RecordStatus == RecordStatus.Complete && x.CheckInTime >= start && x.CheckInTime <= end).ToListAsync();
     }
 
-    public async Task UpdateDepositAsync(int roomId,decimal deposit)
+    public async Task UpdateDepositAsync(int roomId, decimal deposit)
     {
         if (deposit < 0)
         {
@@ -92,6 +94,75 @@ public class HistoryRecordService : BasicService<HistoryRecord>
         record.Deposit = deposit;
 
         await UpdateAsync(record);
+    }
+
+    /// <summary>
+    /// 获取登记信息
+    /// </summary>
+    /// <param name="recordId"></param>
+    /// <returns></returns>
+    public async Task<CheckInRegister?> GetRegisterInformationAsync(int recordId)
+    {
+        var record = await Repository.FindAsync(recordId);
+        if (record?.OccupantId == null) return null;
+        var roomService = new RoomService();
+        var room = await roomService.GetAsync(record.RoomId);
+        if (room == null) return null;
+        var occupantService = new OccupantService();
+        var occupants = await occupantService.GetOccupantsAsync(record.OccupantId);
+        if (!occupants.Any())
+            return null;
+        var occupant = occupants.First();
+
+        var checkInRegister = new CheckInRegister
+        {
+            Area = occupant.Area,
+            Count = record.OccupantCount,
+            Deposit = record.Deposit,
+            From = occupant.From,
+            Id = recordId,
+            IdCard = occupant.IdCard,
+            Name = occupant.Name,
+            PhoneNumber = occupant.PhoneNumber,
+            Price = record.Price,
+            Remark = occupant.Remark,
+            Sex = occupant.Sex
+        };
+        
+        return checkInRegister;
+    }
+
+    /// <summary>
+    /// 更新登记信息
+    /// </summary>
+    /// <param name="registerInformation"></param>
+    public async Task UpdateRegisterInformationAsync(CheckInRegister registerInformation)
+    {
+        var record = await Repository.FindAsync(registerInformation.Id);
+        if (record == null)
+            return;
+        if (record.RecordStatus == RecordStatus.Complete)
+            throw new BusinessException("已完成的记录不可修改");
+        var occupantService = new OccupantService();
+        var occupants = await occupantService.GetOccupantsAsync(record.OccupantId);
+        if (occupants.Any())
+        {
+            var occupant = occupants.First();
+            occupant.Area = registerInformation.Area;
+            occupant.Sex = registerInformation.Sex;
+            occupant.IdCard = registerInformation.IdCard;
+            occupant.Name = registerInformation.Name;
+            occupant.From = registerInformation.From;
+            occupant.PhoneNumber = registerInformation.PhoneNumber;
+            occupant.Remark = registerInformation.Remark;
+            await occupantService.UpdateAsync(occupant);
+        }
+
+        record.OccupantCount = registerInformation.Count;
+        record.Price = registerInformation.Price;
+        record.Deposit = registerInformation.Deposit;
+        
+        await Repository.UpdateAsync(record);
 
     }
 }

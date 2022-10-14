@@ -16,17 +16,17 @@ public class HistoryRecord:BaseEntity
     /// <summary>
     /// 房号
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
     
     /// <summary>
     /// 房型
     /// </summary>
-    public string RoomType { get; set; }
-    
+    public string? RoomType { get; set; }
+
     /// <summary>
     /// 入住房客
     /// </summary>
-    public List<int> OccupantId { get; set; }
+    public List<int> OccupantId { get; set; } = new List<int>();
     
     /// <summary>
     /// 房客人数

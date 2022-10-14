@@ -55,17 +55,23 @@ public partial class Index
         }
     }
 
-    private async Task OpenRoomAsync(RoomDetail context)
+    /// <summary>
+    /// 保存登记信息
+    /// </summary>
+    /// <param name="roomId"></param>
+    /// <param name="recordId"></param>
+    private async Task SaveRegisterInformationAsync(int roomId,int? recordId = null)
     {
         var parameters = new DialogParameters
         {
-            ["RoomId"] = context.Id,
+            ["RoomId"] = roomId,
+            ["RecordId"] = recordId
         };
         var dialog = DialogService.Show<CheckInRegisterForm>("", parameters);
         var result = await dialog.Result;
         if (!result.Cancelled && result.Data is true)
         {
-            Snackbar.Add("登记入住成功", Severity.Success);
+            Snackbar.Add("登记信息保存成功", Severity.Success);
             await LoadRoomDataAsync();
         }
     }
@@ -77,6 +83,7 @@ public partial class Index
             Snackbar.Add("不是空房状态下，无法删除", Severity.Warning);
             return;
         }
+
         var checkResult = await DialogService.ShowMessageBox("提示", "删除房间操作不可撤销，确定要删除吗？", "删除", "取消");
         if (checkResult == true)
         {
@@ -88,7 +95,7 @@ public partial class Index
             }
             catch (Exception e)
             {
-                Logger.LogError(e,"delete room fail");
+                Logger.LogError(e, "delete room fail");
                 Snackbar.Add(e.Message, Severity.Error);
             }
         }

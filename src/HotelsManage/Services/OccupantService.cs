@@ -39,4 +39,9 @@ public class OccupantService : BasicService<Occupant>
 
         return await GetOccupantsAsync(history.OccupantId);
     }
+
+    public async Task UpdateAsync(Occupant occupant)
+    {
+        await Repository.UpdateAsync(occupant);
+    }
 }

@@ -43,7 +43,7 @@
         <MudTd>
             @if (context.Status == RoomStatus.Empty)
             {
-                <MudButton Variant="Variant.Filled" OnClick="() => OpenRoomAsync(context)" Color="Color.Primary">开房</MudButton>
+                <MudButton Variant="Variant.Filled" OnClick="() => SaveRegisterInformationAsync(context.Id)" Color="Color.Primary">开房</MudButton>
                 <MudButton Variant="Variant.Filled" OnClick="() => SaveRoomAsync(context.Id)" Color="Color.Tertiary">修改</MudButton>
                 <MudButton Variant="Variant.Filled" OnClick="() => DeleteRoomAsync(context)" Color="Color.Error">删除</MudButton>
             }
@@ -75,6 +75,7 @@
                                     <MudTh>来自哪里</MudTh>
                                     <MudTh>电话</MudTh>
                                     <MudTh>备注</MudTh>
+                                    <MudTh>变更</MudTh>
                                 </HeaderContent>
                                 <RowTemplate>
                                     <MudTd>@Occupant.Name</MudTd>
@@ -84,6 +85,14 @@
                                     <MudTd>@Occupant.From</MudTd>
                                     <MudTd>@Occupant.PhoneNumber</MudTd>
                                     <MudTd>@Occupant.Remark</MudTd>
+                                    <MudTd>
+                                        <MudButton
+                                            Variant="Variant.Filled"
+                                            OnClick="() => SaveRegisterInformationAsync(context.Id, context.HistoryRecordId)"
+                                            Color="Color.Primary">
+                                            变更登记信息
+                                        </MudButton>
+                                    </MudTd>
                                 </RowTemplate>
                             </MudTable>
                         </MudCardContent>

@@ -4,20 +4,19 @@
     <projectFile>HotelsManage/HotelsManage.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Model/Validator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/RoomForm.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowRecordStatus.razor" afterDir="false" />
+    <list default="true" id="8206f0e6-3089-47ef-be74-7c798a72bf9d" name="Changes" comment="room action">
+      <change afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HotelsManage/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/AppExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/AppExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Model/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Model/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Database/DbAccess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Database/DbAccess.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Model/HistoryRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Model/HistoryRecord.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Counter.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/FetchData.razor" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Services/OccupantService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/OccupantService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HotelsManage/Services/RoomService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Services/RoomService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowDepositStatus.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowDepositStatus.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowRoomStatus.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowRoomStatus.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/Component/ShowRoomStatus.razor.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelsManage/ViewModel/CheckInRegister.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/ViewModel/CheckInRegister.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor" beforeDir="false" afterPath="$PROJECT_DIR$/HotelsManage/Shared/Component/CheckInRegisterForm.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +32,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6b71871a51e8449db4cc5eeafda69537819000/91/abf064dc/EnumExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7d35feb8343b470daf9fa26cc3ed6208ae00/ad/644d0216/ILiteCollectionAsync`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/project/HotelsManage/src/HotelsManage/Shared/Component/CheckInRegisterForm.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/project/HotelsManage/src/HotelsManage/_Imports.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
@@ -86,7 +86,7 @@
       <updated>1665556184522</updated>
       <workItem from="1665556193857" duration="10144000" />
       <workItem from="1665624062778" duration="2903000" />
-      <workItem from="1665629868820" duration="24897000" />
+      <workItem from="1665629868820" duration="29354000" />
     </task>
     <task id="LOCAL-00001" summary="open room,check in,check out ,lease room">
       <created>1665656006419</created>
@@ -102,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665656345917</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="room action">
+      <created>1665718715696</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1665718715696</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,23 +132,37 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="open room,check in,check out ,lease room" />
     <MESSAGE value="fill default price" />
-    <option name="LAST_COMMIT_MESSAGE" value="fill default price" />
+    <MESSAGE value="room action" />
+    <option name="LAST_COMMIT_MESSAGE" value="room action" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/HotelsManage/Pages/Index.razor.cs</url>
-          <line>98</line>
+          <line>105</line>
           <properties documentPath="D:\project\HotelsManage\src\HotelsManage\Pages\Index.razor.cs" initialLine="36" containingFunctionPresentation="method 'CheckOutRoomAsync'">
             <startOffsets>
-              <option value="2836" />
+              <option value="3062" />
             </startOffsets>
             <endOffsets>
-              <option value="2926" />
+              <option value="3152" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/HotelsManage/Services/HistoryRecordService.cs</url>
+          <line>131</line>
+          <properties documentPath="D:\project\HotelsManage\src\HotelsManage\Services\HistoryRecordService.cs" initialLine="131" containingFunctionPresentation="method 'GetRegisterInformationAsync'">
+            <startOffsets>
+              <option value="4028" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4051" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

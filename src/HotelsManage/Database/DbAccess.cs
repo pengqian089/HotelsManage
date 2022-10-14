@@ -20,7 +20,8 @@ public class DbAccess
         {
             Log.Error(e,"database error");
             MessageBox.Show(e.Message);
-            throw;
+            Environment.Exit(0);
+            return null;
         }
     });
 

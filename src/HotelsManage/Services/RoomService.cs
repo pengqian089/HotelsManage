@@ -173,27 +173,4 @@ public class RoomService : BasicService<Room>
         room.Status = RoomStatus.Empty;
         await Repository.UpdateAsync(room);
     }
-
-    /// <summary>
-    /// 续费
-    /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="price"></param>
-    /// <exception cref="BusinessException"></exception>
-    public async Task LeaseRoom(int roomId, decimal price)
-    {
-        var room = await Repository.FindAsync(roomId);
-
-        if (room == null)
-            throw new BusinessException("没有找到房间");
-
-        var historyRecordService = new HistoryRecordService();
-        var record = await historyRecordService.FindCheckInAsync(roomId);
-        if (record == null)
-            throw new BusinessException("没有查找到开房记录，请检查");
-
-        record.Price += price;
-
-        await historyRecordService.UpdateAsync(record);
-    }
 }
